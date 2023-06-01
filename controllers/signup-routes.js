@@ -5,17 +5,23 @@ const User = require("../models/User")
   });
 
   router.post('/', async (req, res) => {
-    User.create({
-        username: req.username,
-        email: req.email,
-        password: req.password
-    })
-    .then((user) => {
-        res.json(user);
-      })
-      .catch((err) => {
-        res.json(err);
+    try {
+      const dbUserData = await User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
       });
+  
+      // Set up sessions with a 'loggedIn' variable set to `true`
+      req.session.save(() => {
+        req.session.loggedIn = true;
+  
+        res.status(200).json(dbUserData);
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
   });
 
 module.exports = router;
