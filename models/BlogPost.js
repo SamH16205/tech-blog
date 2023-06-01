@@ -20,6 +20,9 @@ Blogpost.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    created_on: {
+      type: 'TIMESTAMP'
+    }
   },
   {
     sequelize,

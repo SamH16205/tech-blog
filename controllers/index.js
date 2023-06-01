@@ -1,8 +1,14 @@
 const router = require('express').Router();
 
-router.get('/', async (req, res) => {
-    res.render('homepage');
-  });
+const blogRoutes = require('./blog-routes.js');
+const loginRoutes = require('./login-routes.js');
+const signupRoutes = require('./signup-routes.js');
 
+router.use('/login', loginRoutes);
+router.use('/homepage', blogRoutes);
+router.use('/signup', signupRoutes)
+router.get('/', async (req, res) => {
+    res.render('landing-page');
+  });
 
 module.exports = router;
