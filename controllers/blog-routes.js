@@ -1,27 +1,32 @@
 const router = require('express').Router();
 const Blogpost = require("../models/BlogPost")
-const User = require("../models/User")
 
   router.get('/', async (req, res) => {
-    res.render('homepage',{loggedIn: req.session.loggedIn});
+    res.render('homepage');
+  });
+
+  router.get('/newpost', async (req, res) => {
+    res.render('new-post');
   });
 
 //   when a user writes a new post
   router.post('/newpost', async (req, res) => {
-    Blogpost.create({
+    try{
+    const dbBlogData = await Blogpost.create({
         created_by: req.body.created_by,
-        created_on: req.body.created_on,
+        text: req.body.text
     })
-    .then((blog) => {
-        res.json(blog);
-      })
-      .catch((err) => {
-        res.json(err);
-      });
-  });
+        res.json(dbBlogData)
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
 
 //   when a user clicks on a post to read it
-  router.get('/blog/:id', async (req, res) => {
-    res.render('homepage');
+  router.get('/:id', async (req, res) => {
+    res.render('blogpost');
   });
+
 module.exports = router;

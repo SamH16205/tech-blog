@@ -5,7 +5,7 @@ const loginRoutes = require('./login-routes.js');
 const signupRoutes = require('./signup-routes.js');
 
 router.use('/login', loginRoutes);
-router.use('/homepage', blogRoutes);
+router.use('/blog', blogRoutes);
 router.use('/signup', signupRoutes)
 router.get('/', async (req, res) => {
     res.render('landing-page');

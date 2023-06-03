@@ -20,8 +20,9 @@ Blogpost.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    created_on: {
-      type: 'TIMESTAMP'
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   },
   {
