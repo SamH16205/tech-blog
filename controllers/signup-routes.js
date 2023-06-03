@@ -15,6 +15,7 @@ const User = require("../models/User")
       // Set up sessions with a 'loggedIn' variable set to `true`
       req.session.save(() => {
         req.session.loggedIn = true;
+        req.session.username = dbUserData.username
   
         res.status(200).json(dbUserData);
       });
