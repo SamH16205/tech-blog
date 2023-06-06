@@ -2,8 +2,16 @@ const router = require('express').Router();
 const Blogpost = require("../models/BlogPost")
 
   router.get('/', async (req, res) => {
-    res.render('homepage');
+    const blogpost = await Blogpost.findAll()
+    const bp = blogpost.map((data)=>data.get({plain:true}))
+    res.render('homepage',{bp})
   });
+
+router.get('/api', async(req,res) => {
+  const dbData = await Blogpost.findAll()
+  const dl = dbData.map((data) => data.get({plain:true}))
+  res.send({dl})
+})
 
   router.get('/newpost', async (req, res) => {
     res.render('new-post');
@@ -14,7 +22,8 @@ const Blogpost = require("../models/BlogPost")
     try{
     const dbBlogData = await Blogpost.create({
         created_by: req.body.created_by,
-        text: req.body.text
+        text: req.body.text,
+        title: req.body.title
     })
         res.json(dbBlogData)
   }

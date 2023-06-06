@@ -1,10 +1,3 @@
-function tester(){
-  console.log('its working')
-}
-
-
-
-
 async function getUsername() {
         const response = await fetch('/login/current');
         if (response.ok) {
@@ -21,11 +14,12 @@ const postFormHandler = async (event) => {
     event.preventDefault();
 
     const text = document.querySelector('#newpost-text').value.trim();
+    const title = document.querySelector('#newpost-title').value.trim();
     const created_by = await getUsername()
     if (text) {
       const response = await fetch('/blog/newpost', {
         method: 'POST',
-        body: JSON.stringify({ created_by, text }),
+        body: JSON.stringify({ created_by, text, title }),
         headers: { 'Content-Type': 'application/json' },
       });
   
