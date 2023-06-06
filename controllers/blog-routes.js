@@ -35,9 +35,9 @@ router.get('/api', async(req,res) => {
 
 //   when a user clicks on a post to read it
   router.get('/:id', async (req, res) => {
-    res.render('blogpost');
+    const data = await Blogpost.findByPk(req.params.id)
+    res.render('viewpost', data.dataValues);
   });
-
 
   router.post('/logout', async (req, res) => {
     if (req.session.loggedIn) {
