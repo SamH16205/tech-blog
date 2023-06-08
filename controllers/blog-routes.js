@@ -14,7 +14,7 @@ router.get('/api', async(req,res) => {
 })
 
   router.get('/newpost', async (req, res) => {
-    res.render('new-post',{loggedIn:req.session.loggedIn});
+    res.render('newpost',{loggedIn:req.session.loggedIn});
   });
 
 //   when a user writes a new post
@@ -65,5 +65,11 @@ router.get('/api', async(req,res) => {
   } else {
       res.status(404).end();
   }
+})
+
+router.delete('/:id', async (req,res) => {
+  const bp = await Blogpost.findByPk(req.params.id)
+  bp.destroy()
+  res.send("Post deleted")
 })
 module.exports = router;

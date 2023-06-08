@@ -15,7 +15,7 @@ const loginFormHandler = async (event) => {
       if (response.ok) {
         document.location.replace('/blog');
       } else {
-        alert('Failed to sign up.');
+        alert('Failed to log in.');
       }
     }
   };
