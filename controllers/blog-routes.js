@@ -33,11 +33,29 @@ router.get('/api', async(req,res) => {
   }
 })
 
-//   when a user clicks on a post to read it
-  router.get('/:id', async (req, res) => {
+// get a single post
+    router.get('/:id', async (req, res) => {
     const data = await Blogpost.findByPk(req.params.id)
-    res.render('viewpost', data.dataValues);
+    if (data.dataValues.created_by === req.session.username){
+      res.render('mypost', data.dataValues)
+    } else{
+      res.render('viewpost', data.dataValues);
+    }
   });
+
+  router.put('/:id', (req, res) =>{
+    Blogpost.update({
+      title: req.body.title,
+      text: req.body.text
+    },{
+      where:{
+        id: req.params.id
+      }
+    })
+    .then((bp) => {
+      res.json(bp)
+    })
+  })
 
   router.post('/logout', async (req, res) => {
     if (req.session.loggedIn) {
